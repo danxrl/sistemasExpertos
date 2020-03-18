@@ -20,6 +20,20 @@ export default class Ask extends React.Component{
         this._runData()
     }
 
+    async _restart() {
+        const data = require("./data/data.json")
+        await this.setState({
+            data: data.data,
+            question: '',
+            answer: false,
+            position: 0,
+            element: 0,
+            checked: false,
+            found: ''
+        })
+        this._runData()
+    }
+
     _runData() {
         let elemento = this.state.data[this.state.position][this.state.element]
         this._asking(elemento)
@@ -73,6 +87,11 @@ export default class Ask extends React.Component{
                         <div className="row">
                             <button onClick={() => this._chaining(true)} type="button" className="btn btn-primary col">Si</button>
                             <button onClick={() => this._chaining(false)} type="button" className="btn btn-secondary col">No</button>
+                        </div>
+                    }
+                    { this.state.checked &&
+                        <div className="row">
+                            <button onClick={() => this._restart()} type="button" className="btn btn-success col">Reiniciar</button>
                         </div>
                     }
                 </div>
